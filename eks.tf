@@ -2,9 +2,9 @@
 # EKS Cluster
 ################################################################################
 
+
 module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "~> 19.15"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks?ref=2cb1fac31b0fc2dd6a236b0c0678df75819c5a3b"
 
   cluster_name    = local.name
   cluster_version = local.cluster_version

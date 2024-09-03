@@ -41,8 +41,7 @@ resource "kubernetes_storage_class" "ebs_csi_encrypted_gp3_storage_class" {
 ################################################################################
 
 module "ebs_csi_driver_irsa" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "~> 5.20"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-role-for-service-accounts-eks?ref=89fe17a6549728f1dc7e7a8f7b707486dfb45d89"
 
   role_name_prefix = "${module.eks.cluster_name}-ebs-csi-driver-"
 
@@ -78,8 +77,7 @@ resource "kubernetes_namespace_v1" "istio-ingress" {
 }
 
 module "eks_blueprints_addons" {
-  source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "~> 1.2"
+  source = "git::https://github.com/aws-ia/terraform-aws-eks-blueprints-addons?ref=a9963f4a0e168f73adb033be594ac35868696a91"
 
   cluster_name      = module.eks.cluster_name
   cluster_endpoint  = module.eks.cluster_endpoint
@@ -237,7 +235,7 @@ module "eks_blueprints_addons" {
 ################################################################################
 
 module "eks_ack_addons" {
-  source = "aws-ia/eks-ack-addons/aws"
+  source = "github.com/aws-ia/terraform-aws-eks-ack-addons?ref=bfa0a53f2f7105722e1582ba6a74b7f7912bcf71"
 
   cluster_name      = module.eks.cluster_name
   cluster_endpoint  = module.eks.cluster_endpoint
@@ -375,8 +373,7 @@ resource "aws_prometheus_workspace" "amp" {
 module "amp_ingest_irsa" {
   count = var.enable_amazon_prometheus ? 1 : 0
 
-  source         = "aws-ia/eks-blueprints-addon/aws"
-  version        = "~> 1.0"
+  source         = "github.com/aws-ia/terraform-aws-eks-blueprints-addon?ref=327207ad17f3069fdd0a76c14d3e07936eff4582"
   create_release = false
   create_role    = true
   create_policy  = false
