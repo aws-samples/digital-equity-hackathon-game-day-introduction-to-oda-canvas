@@ -23,7 +23,7 @@ cd eks-oda-canvas-tf
 Once the resources have been provisioned, you will need to replace the `istio-ingress` pods due to a [`istiod` dependency issue](https://github.com/istio/istio/issues/35789). Use the following command to perform a rolling restart of the `istio-ingress` pods:
 
 ```sh
-kubectl rollout restart deployment istio-ingress -n istio-ingress
+kubectl -n istio-ingress rollout restart deployment istio-ingress
 ```
 
 ### Optional: Observability Add-ons for Istio
@@ -50,5 +50,5 @@ helm repo update
 Install the canvas using the following command
 
 ```sh
-helm install canvas oda-canvas/canvas-oda -n canvas --create-namespace
+helm install canvas oda-canvas/canvas-oda --set canvas-vault.enabled=false -n canvas --create-namespace
 ```
